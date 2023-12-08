@@ -1,24 +1,25 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 
-#plt.style.use('fivethirtyeight')
 
-data = pd.read_csv('pcshour.csv')
-bins = [2, 4, 6, 8, 10, 16]
-plt.hist(data.phonehour, bins=bins, edgecolor='black')
+def genderhvshouristogram(whichhour, whichgender):
+    data = pd.read_csv('pcshour.csv')
+    bins = [1, 4, 6, 8, 10, 12, 14, 16]
+    male = []
+    female = []
+    for index, row in data.iterrows():
+        if row['gender'] == "Laki-laki":
+            male.append(row[whichhour])
+        elif row['gender'] == "Perempuan":
+            female.append(row[whichhour])
+    plt.title(f"Rata-rata jumlah jam dihabiskan untuk {whichhour} responden {whichgender}")
+    plt.xlabel(f"Rata-rata jumlah jam dihabiskan untuk {whichhour} per hari")
+    plt.ylabel('Jumlah responden')
+    if whichgender == "Laki-laki":
+        plt.hist(male, bins=bins, edgecolor='black')
+    elif whichgender == "Perempuan":
+        plt.hist(female, bins=bins, edgecolor='black')
+    plt.show()
 
-"""
-title = input("Insert the title: ")
-plt.title(title)
-xlabel = input("Insert the x-coordinate label: ")
-plt.xlabel(xlabel)
-ylabel = input("Insert the y-coordinate label: ")
-plt.ylabel(ylabel)
-"""
-plt.title('Relasi antara jenis kelamin dan penggunaan hp')
-plt.xlabel('Rata-rata penggunaan handphone per hari (dalam jam)')
-plt.ylabel('Jumlah responden')
 
-plt.tight_layout()
-
-plt.show()
+genderhvshouristogram('komputer', 'Laki-laki')
