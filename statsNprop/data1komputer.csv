@@ -1,39 +1,40 @@
 gender,komputer,usage
-L,7,Youtube
-L,3,Coding
-L,2,Youtube
-L,2,Konten edukasi
-L,5,Konten edukasi
-L,1,Media sosial
-P,3,Youtube
-L,4,Media sosial
-L,2,Youtube
-P,6,Netflix
-P,2,Konten edukasi
-P,3,Konten edukasi
-L,3,Netflix
-P,5,Anime
-L,7,Youtube
-L,4,Netflix
-L,1,Konten edukasi
-P,3,Anime
-L,2,Youtube
-P,4,Media sosial
-L,5,Game
-L,1,Media sosial
-P,0,Media sosial
-P,4,Netflix
-P,4,Konten edukasi
-P,3,Youtube
-L,6,Konten edukasi
-L,3,Youtube
-P,4,Youtube
-P,5,Netflix
-P,5,Media sosial
-P,1,Media sosial
-P,5,Game
-L,2,Konten edukasi
-P,4,Youtube
-L,2,Netflix
-P,5,Youtube
-P,4,Youtube
+Laki-laki,7,Youtube
+Laki-laki,3,Coding
+Laki-laki,2,Youtube
+Laki-laki,2,Konten edukasi
+Laki-laki,5,Konten edukasi
+Laki-laki,1,Media sosial
+Perempuan,3,Youtube
+Laki-laki,4,Media sosial
+Laki-laki,2,Youtube
+Perempuan,6,Netflix
+Perempuan,2,Konten edukasi
+Perempuan,3,Konten edukasi
+Laki-laki,3,Netflix
+Perempuan,5,Anime
+Laki-laki,7,Youtube
+Laki-laki,4,Netflix
+Laki-laki,1,Konten edukasi
+Perempuan,3,Anime
+Laki-laki,2,Youtube
+Perempuan,4,Media sosial
+Laki-laki,5,Game
+Laki-laki,1,Media sosial
+Perempuan,0,Media sosial
+Perempuan,4,Netflix
+Perempuan,4,Konten edukasi
+Perempuan,3,Youtube
+Laki-laki,6,Konten edukasi
+Laki-laki,3,Youtube
+Perempuan,4,Youtube
+Perempuan,5,Netflix
+Perempuan,5,Media sosial
+Perempuan,1,Media sosial
+Perempuan,5,Game
+Laki-laki,2,Konten edukasi
+Perempuan,4,Youtube
+Laki-laki,2,Netflix
+Perempuan,5,Youtube
+Perempuan,4,Youtube
+
