@@ -35,9 +35,9 @@ def genderhvshourpiechart(whichactivity, whichgender):
         labels = list(appscount.keys())
         slices = list(appscount.values())
     plt.pie(slices, labels=labels, autopct='%1.1f%%', wedgeprops={'edgecolor': 'black'})
-    plt.title(f"Rata-rata jumlah jam dihabiskan untuk {whichactivity} responden {whichgender}")
+    plt.title(f"Aktivitas paling sering dilakukan di {whichactivity} oleh responden {whichgender}")
     plt.tight_layout()
     plt.show()
 
 
-genderhvshourpiechart('komputer', 'Perempuan')
+genderhvshourpiechart('komputer', 'Laki-laki dan Perempuan')
