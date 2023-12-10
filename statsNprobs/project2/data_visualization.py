@@ -64,6 +64,25 @@ def genderhvshourpiechart(whichactivity, whichgender):
     plt.show()
 
 
+def meanhourvsmeanhourpiechart(activity1, activity2):
+    data = pd.read_csv('pcshour.csv')
+    data[activity1].fillna(0, inplace=True)
+    data[activity2].fillna(0, inplace=True)
+    count1 = data[activity1].sum()
+    count2 = data[activity2].sum()
+    # .count() excludes NaN (Not a Number) values from the count
+    count1n = data[activity1].count()
+    count2n = data[activity2].count()
+    avg1 = count1 / count1n if count1n != 0 else 0
+    avg2 = count2 / count2n if count2n != 0 else 0
+    averages = [avg1, avg2]
+    labels = [f'{activity1} ({avg1:.1f} jam)', f'{activity2} ({avg2:.1f} jam)']
+    plt.pie(averages, labels=labels, autopct='', wedgeprops={'edgecolor': 'black'})
+    plt.title(f"Rata-rata waktu dihabiskan untuk {activity1} vs {activity2}")
+    plt.tight_layout()
+    plt.show()
+
+
 def hourvshourscatterplot(activity1, activity2):
     data = pd.read_csv('project2/pcshour.csv')
     x = []
@@ -80,4 +99,5 @@ def hourvshourscatterplot(activity1, activity2):
 
 # genderhvshourhistogram('komputer', 'Laki-laki')
 # genderhvshourpiechart('komputer', 'Laki-laki dan Perempuan')
-hourvshourscatterplot('handphone', 'tidur')
+# meanhourvsmeanhourpiechart('handphone', 'komputer')
+# hourvshourscatterplot('handphone', 'tidur')
