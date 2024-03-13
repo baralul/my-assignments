@@ -1,0 +1,46 @@
+int countPairs(int arr[], int N) {
+    int odd = 0, even = 0;
+    double odd_permutation = 1, even_permutation = 1;
+    double odd_permutation2 = 1, even_permutation2 = 1;
+
+    for (int i = 0; i < N; i++) {
+        if (arr[i] % 2 == 0) {
+            even++;
+        } else {
+            odd++;
+        }
+    }
+    cout << "odd: " << even << endl;
+    cout << "even: " << even << endl;
+    if (odd > 1) {
+        for (int i = 1; i <= odd; ++i) {
+            odd_permutation *= i;
+        }
+        for (int i = 1; i <= odd-2; ++i) {  
+            odd_permutation2 *= i;
+        }
+    } else {
+        odd_permutation = 0;
+    }
+    cout << "odd permutation: " << odd_permutation << endl;
+    cout << "odd_permutation2: " << odd_permutation2 << endl;
+
+    if (even > 1) {
+        for (int i = 1; i <= even; ++i) {
+            even_permutation *= i;
+        }
+        for (int i = 1; i <= even-2; ++i) {  
+            even_permutation2 *= i; 
+        }
+    } else {
+        even_permutation = 0;
+    }
+    cout << "even_permutation: " << even_permutation << endl;
+    cout << "even_permutation2: " << even_permutation2 << endl;
+    
+    int odd_combination = odd_permutation/(odd_permutation2*2);
+    int even_combination = even_permutation/(even_permutation2*2);
+    int combination = odd_combination + even_combination;
+
+    return combination;
+}
