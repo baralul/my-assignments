@@ -3,7 +3,31 @@
 
 using namespace std;
 
+bool searchHorizontal(char matrix[max_rows][max_cols], int rows, int cols, string word) {
+    for (int i = 0; i < rows; i++) {
+        string rowStr = "";
+        for (int j = 0; j < cols; j++) {
+            rowStr += matrix[i][j];
+        }
+        if (rowStr.find(word) != string::npos) {
+            return true;
+        }
+    }
+    return false;
+}
 
+bool searchVertical(char matrix[max_rows][max_cols], int rows, int cols, string word) {
+    for (int j = 0; j < cols; j++) {
+        string colStr = "";
+        for (int i = 0; i < rows; i++) {
+            colStr += matrix[i][j];
+        }
+        if (colStr.find(word) != string::npos) {
+            return true;
+        }
+    }
+    return false;
+}
 
 int main() {
     int N;
