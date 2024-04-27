@@ -29,6 +29,41 @@ bool searchVertical(char matrix[max_rows][max_cols], int rows, int cols, string 
     return false;
 }
 
+bool searchDiagonalRight(char matrix[max_rows][max_cols], int rows, int cols, string word) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            string diagStrR = "";
+            for (int k = 0; k < word.length(); k++) {
+                if (i + k < rows && j + k < cols) {
+                    diagStrR += matrix[i + k][j + k];
+                }
+            }
+            if (diagStrR == word) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool searchDiagonalLeft(char matrix[max_rows][max_cols], int rows, int cols, string word) {
+    for (int i=rows-1; i>=0; i--) {
+        for (int j=cols-1; j>=0; j--) {
+            string diagStrL = "";
+            for (int k = 0; k < word.length(); k++) {
+                if (i - k < 0 && j - k < 0) {
+                    diagStrL += matrix[i - k][j - k];
+                }
+            }
+            if (diagStrL == word) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
 int main() {
     int N;
     cin >> N;
