@@ -4,6 +4,11 @@
 using namespace std;
 
 
+int searchWordsInMatrix() {
+    
+    return 0;
+}
+
 int main() {
     int N;
     cin >> N;
@@ -12,7 +17,6 @@ int main() {
     for(int i=0; i<N; i++) {
         cin >> arr[i];
     }
-    for(int i=0; i<N; i++) {
-        cout << arr[i] << endl;
-    }
+    
+    return 0;
 }
