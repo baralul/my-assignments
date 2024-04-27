@@ -4,8 +4,16 @@
 using namespace std;
 
 
-int searchWordsInMatrix() {
+
+int main() {
+    int N;
+    cin >> N;
+    string arr[N];
     
+    for(int i=0; i<N; i++) {
+        cin >> arr[i];
+    }
+
     char matrix[23][23] = {
     {'a', 'a', 'f', 'l', 'k', 'h', 'p', 'f', 's', 's', 'u', 'f', 'i', 'c', 'i', 'c', 'l', 'e', 's', 'g', 'n', 'n', 'h'},
     {'s', 'f', 'v', 'r', 'e', 'o', 'm', 'r', 'w', 'l', 'r', 't', 't', 's', 'x', 'o', 'q', 'q', 'n', 'a', 'o', 'a', 'o'},
@@ -31,19 +39,6 @@ int searchWordsInMatrix() {
     {'b', 'f', 'r', 'e', 'e', 'z', 'i', 'n', 'g', 'r', 'a', 'i', 'n', 's', 'l', 'i', 'l', 'g', 't', 'm', 'e', 'l', 't'},
     {'h', 'q', 'p', 'y', 'l', 'w', 'h', 'f', 'm', 'n', 'f', 'f', 'u', 'f', 'p', 's', 'w', 'x', 'n', 'u', 'm', 'm', 'v'}
 };
-
-    return 0;
-}
-
-int main() {
-    int N;
-    cin >> N;
-    string arr[N];
-    
-    for(int i=0; i<N; i++) {
-        cin >> arr[i];
-    }
-    searchWordsInMatrix();
     
     return 0;
 }
