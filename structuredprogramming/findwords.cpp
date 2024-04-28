@@ -97,7 +97,24 @@ bool searchDiagonalLeftUp(char matrix[max_rows][max_cols], int rows, int cols, s
     }
     return false;
 }
-
+void searchWordsInMatrix(char matrix[max_rows][max_cols], int rows, int cols, string arr[], int N) {
+    for (int i = 0; i < N; i++) {
+        string word = arr[i];
+        bool found = false;
+        if  (searchHorizontal(matrix, rows, cols, word) || 
+        searchVertical(matrix, rows, cols, word) || 
+        searchDiagonalRight(matrix, rows, cols, word) ||
+        searchDiagonalLeft(matrix, rows, cols, word) || 
+        searchDiagonalRightUp(matrix, rows, cols, word) ||
+        searchDiagonalLeftUp(matrix, rows, cols, word)
+            ) {
+            cout << "Ada" << endl;
+        } else {
+            cout << "Tidak Ada" << endl;
+        }
+    }
+}
+//Adding a void search words in matrix to find the answer
 int main() {
     int N;
     cin >> N;
