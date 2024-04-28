@@ -47,11 +47,11 @@ bool searchDiagonalRight(char matrix[max_rows][max_cols], int rows, int cols, st
 }
 
 bool searchDiagonalLeft(char matrix[max_rows][max_cols], int rows, int cols, string word) {
-    for (int i=rows-1; i>=0; i--) {
+    for (int i=0; i<rows; i++) {
         for (int j=cols-1; j>=0; j--) {
             string diagStrL = "";
             for (int k = 0; k < word.length(); k++) {
-                if (i - k < 0 && j - k < 0) {
+                if (i + k < rows && j - k >= 0) {
                     diagStrL += matrix[i - k][j - k];
                 }
             }
