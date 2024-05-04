@@ -3,6 +3,9 @@
 
 using namespace std;
 
+const int max_rows = 23, max_cols = 23;
+int rows = 23, cols = 23;
+
 bool searchHorizontal(char matrix[max_rows][max_cols], int rows, int cols, string word) {
     for (int i = 0; i < rows; i++) {
         string rowStr = "";
