@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
+
 using namespace std;
 
 template <typename T>
@@ -33,18 +35,42 @@ class Trapezoid {
         }
         
         T calculatePerimeter() {
-            return sqrt(((base1-base2)/2)*((base1-base2)/2)) + 4*4;
+            return 2 * sqrt(pow((base1-base2)/2, 2)+pow(height, 2)) + base1 + base2;
         }
 };
 
-int main() {
-    Trapezoid <int> tp;
-    cout << tp.getHeight() << endl;
-    tp.setBase1(7);
-    tp.setBase2(3);
-    tp.setHeight(4);
 
-    cout << tp.getHeight() << endl;
-    cout << "perimeter is: " << tp.calculatePerimeter() << endl;
-    cout << "area is: " << tp.calculateArea() << endl;
+int main() {
+    
+    cout << "Case 2:" << endl;
+    Trapezoid<double> * trap1 = new Trapezoid<double>(3.0,7.0,4.0);
+    Trapezoid<double> * trap2 = new Trapezoid<double>();
+    
+    double *new_height_trap1 = new double(5.0);
+    trap1->setHeight(*new_height_trap1);
+    
+    double *new_height_trap2 = new double(7.0);
+    trap2->setHeight(*new_height_trap2);
+    
+    vector<Trapezoid<double>>* kumpulan_tp = new vector<Trapezoid<double>>;
+    kumpulan_tp->push_back(*trap1);
+    kumpulan_tp->push_back(*trap2);
+    
+    int i = 1;
+    
+    for(auto kumpulan : *kumpulan_tp){
+        cout<<"Trapezoid "<<i<<" : " <<endl;
+        cout<<"Height : "<<kumpulan.getHeight()<<endl;
+        cout<<"Base 1 : " <<kumpulan.getBase1()<<endl;
+        cout<<"Base 2 : "<<kumpulan.getBase2()<<endl;
+        cout<<"Area : "<<kumpulan.calculateArea()<<endl;
+        cout<<"Perimeter : "<<kumpulan.calculatePerimeter()<<endl;
+        cout<< endl;
+        
+        i++;
+    }
+    return 0;
 }
+
+
+
