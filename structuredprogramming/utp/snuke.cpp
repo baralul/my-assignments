@@ -70,12 +70,12 @@ bool searchDiagonalLeft(char matrix[105][105], int rows, int cols) {
             string diagStrL = "";
             for (int k = 0; k < 5; k++) {
                 if (i + k < rows && j - k >= 0) {
-                    diagStrL += matrix[i - k][j - k];
+                    diagStrL += matrix[i + k][j - k];
                 }
             }
             if (diagStrL == "snuke") {
                 for (int k = 0; k < 5; k++) {
-                    cout << i - k+1 << " " << j - k+1 << endl;
+                    cout << i + k+1 << " " << j - k+1 << endl;
                 }
                 return true;
             }
