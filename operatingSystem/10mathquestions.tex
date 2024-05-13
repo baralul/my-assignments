@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, width=10cm, height=7cm}
+
+\title{Posttest SO}
+\author{Akbar Triutama}
+\date{May 2024}
+
+\begin{document}
+\maketitle{}
+
+\begin{center}
+    \section*{10 Soal Matematika sugoi!}
+\end{center} \vspace{2em}
+
+\subsection*{Riemann Sums, Riemann Integrals, Definite Integrals, Midpoint Rule (Corresponds to Stewart 5.2)} \vspace{2em}
+
+\begin{enumerate}
+    \item Let $f(x) = 8x^3 - 43x^2 + 70x - 21.$ In this exercise, the definite integral $\int_{1/2}^3 f(x) \, dx$ is to be estimated by two Riemann sums $\sum_{j=1}^5 f(s_j) \ \Delta x.$ The sample points used will be specified momentarily. As an aid to visualizing the locations of the sample points, the following graph of $f$ over the interval of integration may be helpful. For each node $x_j,$ a vertical line segment $x = x_j$ has been drawn from the $x$-axis to the graph of $f.$ \vspace{1em}
+
+    \begin{tikzpicture}
+        \begin{axis}[   clip=false,
+        xmin=0, xmax=3.5, ymin=0, ymax=20, 
+        axis lines=left,
+        xtick={0, 0.5, 1, 1.5, 2, 2.5, 3},
+        xticklabels={$0$, $ $, $1$, $ $, $2$, $ $, $3$},
+        xmajorgrids=true,
+        grid style=dashed,
+        ]
+            \addplot[color=cyan, domain=0.5:3]{8*x^3 - 43*x^2 + 70*x - 21}
+            node[right,pos=0.9]{8*x^3 - 43*x^2 + 70*x - 21};
+        \end{axis}
+    \end{tikzpicture} \vspace{1em}
+
+    i) For each $j$, the sample point $s_j$ in the $j^{th}$ subinterval satisfies $f(x) \leq f(s_j)$ for all $x$ in the $j^{th}$ subinterval. The resulting Riemann sum $R^*$ is called an \textbf{upper Riemann sum.} It is an overestimate of the definite integral it approximates. \vspace{1em}
+    
+    ii) For each $j$, the sample point $s_j$ in the $j^{th}$ subinterval satisfies $f(s_j) \leq f(x)$ for all $x$ in the $j^{th}$ subinterval. The resulting Riemann sum $R_*$ is called a \textbf{lower Riemann sum}. It is an underestimate of the definite integral it approximates.
+
+    \item The interval [1,5] is partitioned into N subintervals of equal width. Let $s_1$ denote the midpoint of the first subinterval, $s_2$ the midpoint of the second subinterval, and so on, with $s_N$ denoting the midpoint of the last subinterval. consider the limit
+    $$\lim_{N\to\infty}\sum_{j=1}^{N}\frac{4s_{j}^{2}-1}{N}.$$
+    (i) Identify the sum inside the limit as a Riemann sum, and identify the limit of these Riemann sums as a Riemann integral.
+    
+    (ii) After the first part of the Fundamental Theorem of Calculus has been covered (in the next section), evaluate the given limit.
+
+    \item Identify
+    $$\sum_{j=1}^{N}\left(1+\frac{2j-1}{N}\right)^2\frac{6}{N}$$
+    as a Riemann sum for a certain function $f$ over the interval [1,3] partitioned into $N$ subintervals of equal width. After the first part of the Fundamental Theorem of Calulus has been covered (in the next section), evaluate the limit of these Riemann sums,
+    $$\lim_{N\to\infty}\sum_{j=1}^N\left(1+\frac{2j-1}{N}\right)^2\frac{6}{N}.$$
+
+\end{enumerate} \vspace{2em}
+
+\subsection*{Trigonometric Integrals (Corresponds to Stewart 7.2)} \vspace{2em}
+
+\begin{enumerate}
+    \item Use the reduction formula
+    $$\int\cos^4(u)du=-\frac{1}{n}\cos(u)\sin^{n-1}(u)+\frac{n-1}{n}\int\sin^{n-2}(u)\,du$$
+    to show that
+    $$\int\sin^4(u)du=-\frac{1}{4}\sin^3(u)\cos(u)-\frac{3}{8}\cos(u)\sin(u)+\frac{3}{8}u+C.$$
+
+    \item Use the reduction formula
+    $$\int\cos^n(u)du=\frac{1}{n}\cos^{n-1}(u)\sin(u)+\frac{n-1}{n}\int\cos^{n-2}(u)\,du$$
+    to show that
+    $$\int\cos^4(u)du=\frac{1}{4}\cos^3(u)\sin(u)+\frac{3}{8}\cos(u)\sin(u)+\frac{3}{8}u+C.$$
+
+    \item Use the preceding exercise to evaluate $\displaystyle \int_0^1\cos^4(\pi x)\,dx$
+    
+\end{enumerate} \vspace{2em}
+
+\subsection*{Numerical Integration (Corresponds to Stewart's Section 7.7)} \vspace{2em}
+
+\begin{enumerate}
+    \item Refer to the definition of the Gini coefficient $\gamma$ that was given in the preceding problem. Approximate $\gamma$ using the Trapezoidal Rule and Simpson's Rule with the following data: \vspace{2em}
+    
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+        $x$ & 10 & 20 & 30 & 40 & 50 & 60 & 70 & 80 & 90 \\ \hline
+        $L(x)$ & 3 & 7 & 12 & 18 & 24 & 32 & 41 & 54 & 73 \\ \hline
+    \end{tabular}
+
+    \item After the injection of 5 mg of dye into a heart, readings of the concentration $c(t)$ of ejected dye (in mg/L) were taken at 1.5 second intervals. The equation for cardiac output $r$ is \vspace{2em}
+
+    $$\int_0^Trc(t)dt=5$$ \vspace{2em}
+
+    where $T$ is a time that is large enough for essentially all of the injected dye to be ejected, but not so long that recirculation occurs. Use Simpson's Rule to estimate cardiac output $r$, stated in the customary units of L/min, based on the following tabulated readings: \vspace{2em}
+
+    \begin{tabular}{|c|c|c|c|c|c|c|c|} \hline
+        $t$ & 0 & 1.5 & 3 & 4.5 & 6 & 7.5 & 9 \\ \hline
+        $c(t)$ & 0 & 2.4 & 6.3 & 9.7 & 7.1 & 2.3 & 0 \\ \hline
+    \end{tabular}
+\end{enumerate} \vspace{2em}
+
+\subsection*{Series Related to \normalfont{1/(1$\pm x$)}\\\textbf{(Corresponds to Stewart 11.8)}} \vspace{2em}
+
+\begin{enumerate}
+    \item The power series $\sum_{n=1}^\infty nx^n$ converges for -1 < x < 1. Let $f(x)$ be the sum of this series for $x$ in the interval of convergence. It can be shown that $f(x)$ = $x/(x-1)^2$ but this exercise does \emph{not} rely on this evaluation of $f(x)$. Calculate the power series of $q(x)=\frac{f(x)}{2+x}.$ Do the calculation in two different ways. First, multiply the given series for $f(x)$ tern-by-tern with the series for $1/(2+x).$ Report all terms through $x^4.$ For the second calculation, write $q(x)=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4+\dots.$ Then
+    $$\sum_{n=1}^\infty nx^n=f(x)=(2+x)(a_0+a_1x+a_2x^2+a_3x^3+a_4x^4+\dots).$$
+    Multiply the two factors on the right term-by-term. Collect all terms through $x^4.$ Equate the constant terms of the series on each side to find $a_0$. It will be 0. Then equate the coefficients of $x$ on each side to find $a_1.$ Continue with $x^2$, $x^3$, and $x^4.$
+
+    \item The power series $2+\sum_{n=1}^\infty nx^n$ converges for $-1 < x < 1.$ Let $f(x)$ be the sum of this series for x in the interval of convergence. It can be shown that $f(x)$ = $\left(2x^2-3x+2\right)/(x-1)^2$ but this exercise does \emph{not} rely on this evaluation of $f(x)$. Calculate the power series of $q(x)=\frac{2+x}{f(x)}.$ To do so, write $q(x)=a_0+a_1x+a_2x^2+a_3x^3+\dots.$ Then
+    $$2+x=\left(2+\sum_{n=1}^\infty nx^n\right)(a_0+a_1x+a_2x^2+a_3x^3+a_4x^4+\dots).$$
+    Multiply the two factors on the right term-by term. Collect all terms through $x^4$. Equate like powers of $x$ on each side of the equation through $x^3.$ Successively solve for $a_0,a_1,a_2$ and $a_3.$ \vspace{2em}
+
+    In Exercises 13 and 14, use the power series
+    $$1n(1+u)=u-\frac{1}{2}u^2+\frac{1}{3}u^3-\frac{1}{4}u^4+\dots\hspace{2em}(-1<u<1)$$
+    to express the given function as a power series in $x$ with base point 0. Report terms through at least order 4.
+\end{enumerate}
+
+\end{document}
