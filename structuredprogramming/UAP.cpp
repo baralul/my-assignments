@@ -8,13 +8,19 @@ using namespace std;
 class Cake;
 class Receipt;
 
-void mainMenu();
 int selectCake();
 int selectFlavor();
 int selectSize();
-Cake orderCake();
+Cake listingCake();
+void orderCake();
+void confirmOrder(Cake array[], int n);
+void mainMenu();
 void showCatalog();
+void itemList();
+void showReceipt(Cake array[], int n);
 
+bool in_loop = true;
+bool cart_empty = true;
 const pair<string, double> options[] = {
     {"cake1", 4.50},
     {"cake2", 5.50},
@@ -54,20 +60,24 @@ class Cake {
 };
 
 void mainMenu() {
-    int navigate;
     
-    cout << "Welcome to Hammer Bakery! How can we help you?" 
-        << "\n1. Order\n2. Show menu\n3. Purchase history\n4. Log out" << endl;
-    while(!(navigate == 1 || navigate == 2 || navigate == 3 || navigate == 4)) {
-        cout << "Please select from the available option: ";
-        cin >> navigate;
-    }
-    
-    if(navigate == 1){
-        orderCake();
-    }
-    else if(navigate == 2){
-        showCatalog();
+    while(in_loop) {
+        
+        int navigate = -1, item;
+        cout << "Welcome to Hammer Bakery! How can we help you?" 
+            << "\n1. Order\n2. Show menu" << endl; // todo: 3. Purchase history\n4. Log out
+        
+        while(!(navigate == 1 || navigate == 2)) {
+            cout << "Please select from the available option: ";
+            cin >> navigate;
+        }
+        
+        if(navigate == 1){
+            orderCake();
+        }
+        else if(navigate == 2){
+            showCatalog();
+        }
     }
 }
 
@@ -103,7 +113,7 @@ int selectSize() {
     return size;
 }
 
-Cake orderCake() {
+Cake listingCake() {
     int cake, flavor, size;
     
     cake = selectCake()-1;
@@ -113,6 +123,23 @@ Cake orderCake() {
     Cake cake_object(options[cake].first, sizes[size], flavors[flavor], options[cake].second);
     
     return cake_object;
+}
+
+void orderCake() {
+    int n;
+    
+    cout << "How many cakes do you want to buy?: ";
+    cin >> n;
+    
+    Cake *array = new Cake[n];
+    for(int i=0; i<n; i++) {
+        array[i] = listingCake();
+        cart_empty = false;
+    }
+    
+    if(!cart_empty) {
+        confirmOrder(array, n);
+    }
 }
 
 void showCatalog() {
@@ -125,27 +152,39 @@ void showCatalog() {
     }
 }
 
-int main() {
-    int n;
-    
-    cout << "How many cakes do you want to buy?: ";
-    cin >> n;
-    
-    Cake *array = new Cake[n];
+void itemList(Cake array[], int n) {
+    cout << setw(15) << left << "Flavor" << setw(15) << "Cake" << setw(15) 
+        << "Size" << setw(5) << "Price" << endl;
     for(int i=0; i<n; i++) {
-        array[i] = orderCake();
+        cout << setw(15) << left << array[i].getFlavor() 
+            << setw(15) << array[i].getName() 
+            << setw(15) << array[i].getSize()
+            << setw(5) << array[i].getPrice() << endl;
     }
+} // todo: print total price
+
+void confirmOrder(Cake array[], int n) {
+    int answer;
     
-    cout << setw(50) << mid << "DD-MM-YYYY Purchase" << endl;
-    cout << setw(35) << left << "Item" << setw(15) << right << "Price" << endl;
-    for(int i=0; i<sizeof(array)/sizeof(array[0]); i++) {
-        cout << setw(35) << left << array[i].getFlavor() << " " 
-            << array[i].getName() << " (" << array[i].getSize() << ") "
-            << setw(15) << right << array[i].getPrice() << endl;
+    cout << "\nHere's your order list: " << endl;
+    itemList(array, n);
+    cout << "Proceed with the order?\n1. Yes\n2. No" << endl;
+    cin >> answer;
+    
+    if(answer==1){
+        showReceipt(array, n); // todo: write to a file
     }
-    cout << setw(50) << mid << "Thank you for purchasing in our shop!" << endl;
+}
+
+void showReceipt(Cake array[], int n) {
+    cout << setw(50) << left << "DD-MM-YYYY Purchase" << endl; // todo: with ctime record time
+    itemList(array, n);
+    cout << setw(50) << left << "Thank you for purchasing in our shop!" << endl;
+}
+
+int main() {
     
-    
+    mainMenu();
 
     return 0;
 }
