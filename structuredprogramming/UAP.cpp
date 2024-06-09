@@ -22,12 +22,13 @@ void showReceipt(Cake array[], int n);
 bool in_loop = true;
 bool cart_empty = true;
 const pair<string, double> options[] = {
-    {"cake1", 4.50},
-    {"cake2", 5.50},
-    {"cake3", 6.90}
+    {"cookies", 4.50},
+    {"cupcake", 5.50},
+    {"birthday cake", 6.90}
 };
-const string sizes[5] = {"Small", "Medium", "Large", "Extra Large"};
-const string flavors[5] = {"Vanilla", "Chocolate", "Red Velvet", "Strawberry"};
+const string sizes[4] = {"Small", "Medium", "Large", "Extra Large"};
+const string flavors[4] = {"Vanilla", "Chocolate", "Red Velvet", "Strawberry"};
+const double sizeMultiplier[4] = {1.0, 1.5, 2.0, 2.5};
 
 class Cake {
     string name, size, flavor;
@@ -119,8 +120,11 @@ Cake listingCake() {
     cake = selectCake()-1;
     flavor = selectFlavor()-1;
     size = selectSize()-1;
+
+    double basePrice = options[cake].second;
+    double finalPrice = basePrice * sizeMultiplier[size];
     
-    Cake cake_object(options[cake].first, sizes[size], flavors[flavor], options[cake].second);
+    Cake cake_object(options[cake].first, sizes[size], flavors[flavor], finalPrice);
     
     return cake_object;
 }
@@ -146,9 +150,12 @@ void showCatalog() {
     int n = sizeof(options)/sizeof(options[0]);
     
     cout << "Hammer Bakery's Menu" << endl;
-    for(int i=0; i<n; i++) {
-        cout << i+1 << ". " << options[i].first << " : " << fixed << setprecision(2) 
-            << options[i].second << endl;
+    for(int i = 0; i < n; i++) {
+        cout << i + 1 << ". " << options[i].first << ":" << endl;
+        for(int j = 0; j < 4; j++) {
+            cout << "   " << sizes[j] << " : " << fixed << setprecision(2) 
+                << options[i].second * sizeMultiplier[j] << endl;
+        }
     }
 }
 
@@ -177,9 +184,11 @@ void confirmOrder(Cake array[], int n) {
 }
 
 void showReceipt(Cake array[], int n) {
-    cout << setw(50) << left << "DD-MM-YYYY Purchase" << endl; // todo: with ctime record time
+    time_t now = time(0);
+    char* dt = ctime(&now);
+    cout << setw(50) << left << dt << endl; // todo: with ctime record time
     itemList(array, n);
-    cout << setw(50) << left << "Thank you for purchasing in our shop!" << endl;
+    cout << setw(50) << left << "Thank you for purchasing in our shop!" << endl << endl;
 }
 
 int main() {
