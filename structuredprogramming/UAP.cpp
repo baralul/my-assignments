@@ -141,9 +141,9 @@ void registerUser() {
     
     if (findUser(username) == nullptr) {
         users.push_back(User(username, password));
-        cout << "Registration successful!" << endl;
+        cout << "Registration successful!" << endl << endl;
     } else {
-        cout << "Username already exists!" << endl;
+        cout << "Username already exists!" << endl << endl;
     }
 }
 
@@ -275,9 +275,21 @@ void confirmOrder(Cake array[], int n) {
 
 void showReceipt(Cake array[], int n) {
     time_t now = time(0);
-    char* dt = ctime(&now);
-    cout << setw(50) << left << dt << endl; // todo: with ctime record time
+    tm *gmtm = gmtime(&now);
+    gmtm->tm_hour += 7;  
+    mktime(gmtm);  
+    char dt[30];
+    strftime(dt, sizeof(dt), "%Y-%m-%d %H:%M:%S WIB", gmtm); 
+    cout << setw(50) << left << dt << endl;
+
     itemList(array, n);
+    
+    double total = 0;
+    for (int i = 0; i < n; i++) {
+        total += array[i].getPrice();
+    }
+    
+    cout << setw(45) << left << "Total" << total << endl;
     cout << setw(50) << left << "Thank you for purchasing in our shop!" << endl << endl;
 }
 
