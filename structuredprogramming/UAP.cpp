@@ -2,11 +2,13 @@
 #include <iomanip>
 #include <string>
 #include <ctime>
+#include <vector>
 
 using namespace std;
 
 class Cake;
 class Receipt;
+class User;
 
 int selectCake();
 int selectFlavor();
@@ -18,9 +20,14 @@ void mainMenu();
 void showCatalog();
 void itemList();
 void showReceipt(Cake array[], int n);
+void registerUser();
+bool loginUser();
+User* findUser(const string& username);
 
 bool in_loop = true;
 bool cart_empty = true;
+bool is_logged_in = false;
+User* current_user = nullptr;
 const pair<string, double> options[] = {
     {"cookies", 4.50},
     {"cupcake", 5.50},
@@ -29,6 +36,24 @@ const pair<string, double> options[] = {
 const string sizes[4] = {"Small", "Medium", "Large", "Extra Large"};
 const string flavors[4] = {"Vanilla", "Chocolate", "Red Velvet", "Strawberry"};
 const double sizeMultiplier[4] = {1.0, 1.5, 2.0, 2.5};
+
+class User {
+    string username;
+    string password;
+    
+    public:
+        User(string u, string p) : username(u), password(p) {}
+        
+        string getUsername() {
+            return username;
+        }
+        
+        bool checkPassword(string p) {
+            return password == p;
+        }
+};
+
+vector<User> users;
 
 class Cake {
     string name, size, flavor;
@@ -64,22 +89,87 @@ void mainMenu() {
     
     while(in_loop) {
         
-        int navigate = -1, item;
+       int navigate = -1;
         cout << "Welcome to Hammer Bakery! How can we help you?" 
-            << "\n1. Order\n2. Show menu" << endl; // todo: 3. Purchase history\n4. Log out
+            << "\n1. Login\n2. Register\n3. Exit" << endl;
         
-        while(!(navigate == 1 || navigate == 2)) {
+        while(!(navigate >= 1 && navigate <= 3)) {
             cout << "Please select from the available option: ";
             cin >> navigate;
         }
         
-        if(navigate == 1){
-            orderCake();
-        }
-        else if(navigate == 2){
-            showCatalog();
+        if (navigate == 1) {
+            if (loginUser()) {
+                cout << "Login successful!\n" << endl;
+                is_logged_in = true;
+                while (is_logged_in) {
+                    int action = -1;
+                    cout << "1. Order\n2. Show menu\n3. Logout" << endl;
+                    
+                    while (!(action >= 1 && action <= 3)) {
+                        cout << "Please select from the available option: ";
+                        cin >> action;
+                    }
+                    
+                    if (action == 1) {
+                        orderCake();
+                    } else if (action == 2) {
+                        showCatalog();
+                    } else if (action == 3) {
+                        is_logged_in = false;
+                        cout << "Logged out.\n" << endl;
+                    }
+                }
+            } else {
+                cout << "Login failed.\n" << endl;
+            }
+        } else if (navigate == 2) {
+            registerUser();
+        } else if (navigate == 3) {
+            in_loop = false;
         }
     }
+}
+
+void registerUser() {
+    string username, password;
+    cout << "Register an account" << endl;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    
+    if (findUser(username) == nullptr) {
+        users.push_back(User(username, password));
+        cout << "Registration successful!" << endl;
+    } else {
+        cout << "Username already exists!" << endl;
+    }
+}
+
+bool loginUser() {
+    string username, password;
+    cout << "Login to your account" << endl;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    
+    User* user = findUser(username);
+    if (user != nullptr && user->checkPassword(password)) {
+        current_user = user;
+        return true;
+    }
+    return false;
+}
+
+User* findUser(const string& username) {
+    for (auto& user : users) {
+        if (user.getUsername() == username) {
+            return &user;
+        }
+    }
+    return nullptr;
 }
 
 int selectCake() {
