@@ -3,11 +3,12 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include <stdlib.h>
+#include <unistd.h>
 
 using namespace std;
 
 class Cake;
-class Receipt;
 class User;
 
 int selectCake();
@@ -96,11 +97,14 @@ void mainMenu() {
         while(!(navigate >= 1 && navigate <= 3)) {
             cout << "Please select from the available option: ";
             cin >> navigate;
+            system("clear"); // todo: for windows it is "cls"
         }
         
         if (navigate == 1) {
             if (loginUser()) {
-                cout << "Login successful!\n" << endl;
+                cout << "Login successful!" << endl;
+                sleep(2);
+                system("clear");
                 is_logged_in = true;
                 while (is_logged_in) {
                     int action = -1;
@@ -109,19 +113,25 @@ void mainMenu() {
                     while (!(action >= 1 && action <= 3)) {
                         cout << "Please select from the available option: ";
                         cin >> action;
+                        system("clear");
                     }
                     
                     if (action == 1) {
                         orderCake();
                     } else if (action == 2) {
-                        showCatalog();
+                        showCatalog(); 
+                        cout << setw(50) << left << "Press enter to return" << endl; // todo: press enter to return to main menu
+                        cin.clear();
+                        cin.get(); 
                     } else if (action == 3) {
                         is_logged_in = false;
                         cout << "Logged out.\n" << endl;
                     }
                 }
             } else {
-                cout << "Login failed.\n" << endl;
+                cout << "Login failed" << endl;
+                sleep(2);
+                system("clear");
             }
         } else if (navigate == 2) {
             registerUser();
@@ -138,12 +148,17 @@ void registerUser() {
     cin >> username;
     cout << "Enter password: ";
     cin >> password;
+    system("clear");
     
     if (findUser(username) == nullptr) {
         users.push_back(User(username, password));
-        cout << "Registration successful!" << endl << endl;
+        cout << "Registration successful!" << endl;
+        sleep(2);
+        system("clear");
     } else {
-        cout << "Username already exists!" << endl << endl;
+        cout << "Username already exists!" << endl;
+        sleep(2);
+        system("clear");
     }
 }
 
@@ -154,6 +169,7 @@ bool loginUser() {
     cin >> username;
     cout << "Enter password: ";
     cin >> password;
+    system("clear");
     
     User* user = findUser(username);
     if (user != nullptr && user->checkPassword(password)) {
@@ -178,6 +194,7 @@ int selectCake() {
     while(cake < 1 || cake > sizeof(options)/sizeof(options[0])) {
         cout << "Please select from the available option: ";
         cin >> cake;
+        system("clear");
     }
     
     return cake;
@@ -189,6 +206,7 @@ int selectFlavor() {
     while(!(flavor == 1 || flavor == 2 || flavor == 3 || flavor == 4)) {
         cout << "Please select from the available option: ";
         cin >> flavor;
+        system("clear");
     }
     
     return flavor;
@@ -200,6 +218,7 @@ int selectSize() {
     while(!(size == 1 || size == 2 || size == 3 || size == 4)) {
         cout << "Please select from the available option: ";
         cin >> size;
+        system("clear");
     }
     return size;
 }
@@ -224,6 +243,7 @@ void orderCake() {
     
     cout << "How many cakes do you want to buy?: ";
     cin >> n;
+    system("clear");
     
     Cake *array = new Cake[n];
     for(int i=0; i<n; i++) {
@@ -258,18 +278,19 @@ void itemList(Cake array[], int n) {
             << setw(15) << array[i].getSize()
             << setw(5) << array[i].getPrice() << endl;
     }
-} // todo: print total price
+}
 
 void confirmOrder(Cake array[], int n) {
     int answer;
     
-    cout << "\nHere's your order list: " << endl;
+    cout << "Here's your order list: " << endl;
     itemList(array, n);
     cout << "Proceed with the order?\n1. Yes\n2. No" << endl;
     cin >> answer;
+    system("clear");
     
     if(answer==1){
-        showReceipt(array, n); // todo: write to a file
+        showReceipt(array, n); // todo: write to a file 
     }
 }
 
@@ -290,7 +311,9 @@ void showReceipt(Cake array[], int n) {
     }
     
     cout << setw(45) << left << "Total" << total << endl;
-    cout << setw(50) << left << "Thank you for purchasing in our shop!" << endl << endl;
+    cout << setw(50) << left << "Thank you for purchasing in our shop!" << endl;
+    cout << setw(50) << left << "Press enter to continue" << endl;
+    cin.get();
 }
 
 int main() {
