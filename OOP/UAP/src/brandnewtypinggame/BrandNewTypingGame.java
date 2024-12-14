@@ -60,37 +60,38 @@ public class BrandNewTypingGame extends Application {
     }
     
     private void styleButton(Button button) {
-        button.setStyle(
-            "-fx-background-color: #4CAF50;" +  // Warna hijau
-            "-fx-text-fill: white;" +           // Teks putih
-            "-fx-font-size: 18px;" +            // Perbesar font
-            "-fx-font-weight: bold;" +          // Tebal
-            "-fx-padding: 15px 30px;" +         // Padding lebih besar
-            "-fx-background-radius: 10px;" +    // Sudut membulat
-            "-fx-cursor: hand;"                 // Kursor tangan
-        );
+    button.setStyle(
+        "-fx-background-color: #4CAF50;" +  // Warna hijau
+        "-fx-text-fill: white;" +           // Teks putih
+        "-fx-font-size: 18px;" +            // Ukuran font besar
+        "-fx-font-weight: bold;" +          // Tebal
+        "-fx-padding: 10px 20px;" +         // Padding lebih besar
+        "-fx-background-radius: 10px;" +    // Sudut membulat
+        "-fx-cursor: hand;"                 // Kursor tangan
+    );
 
-        // Hover effect
-        button.setOnMouseEntered(e -> button.setStyle(
-            "-fx-background-color: #45a049;" +  // Warna hijau lebih gelap
-            "-fx-text-fill: white;" +
-            "-fx-font-size: 18px;" +
-            "-fx-font-weight: bold;" +
-            "-fx-padding: 15px 30px;" +
-            "-fx-background-radius: 10px;" +
-            "-fx-cursor: hand;"
-        ));
+    // Hover effect
+    button.setOnMouseEntered(e -> button.setStyle(
+        "-fx-background-color: #45a049;" +  // Warna hijau lebih gelap
+        "-fx-text-fill: white;" +
+        "-fx-font-size: 18px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 10px 20px;" +
+        "-fx-background-radius: 10px;" +
+        "-fx-cursor: hand;"
+    ));
 
-        button.setOnMouseExited(e -> button.setStyle(
-            "-fx-background-color: #4CAF50;" +
-            "-fx-text-fill: white;" +
-            "-fx-font-size: 18px;" +
-            "-fx-font-weight: bold;" +
-            "-fx-padding: 15px 30px;" +
-            "-fx-background-radius: 10px;" +
-            "-fx-cursor: hand;"
-        ));
-    }
+    button.setOnMouseExited(e -> button.setStyle(
+        "-fx-background-color: #4CAF50;" +
+        "-fx-text-fill: white;" +
+        "-fx-font-size: 18px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-padding: 10px 20px;" +
+        "-fx-background-radius: 10px;" +
+        "-fx-cursor: hand;"
+    ));
+}
+
 
 
     private void showMainMenu(Stage primaryStage) {
@@ -267,26 +268,26 @@ public class BrandNewTypingGame extends Application {
     }
 
 
-   private void restartGame(Stage primaryStage) {
-    // Hentikan semua Timeline
-    stopAllTimelines();
+private void restartGame(Stage primaryStage) {
+    stopAllTimelines(); // Hentikan semua Timeline
 
-    // Reset semua variabel
+    // Reset variabel
     score = 0;
-    health = 5;  // Reset ke 5 di sini juga
+    health = 5;
     fallingSpeed = 0.5;
     correctLetters = 0;
     totalTypedLetters = 0;
 
-    // Bersihkan dan reset elemen permainan
     fallingTexts.clear();
     root.getChildren().clear();
     focusedText = null;
     isWordFocused = false;
 
-    // Mulai ulang permainan dengan mode yang sama
+    // Restart game
     startGame(primaryStage, isMultiplayer);
+
 }
+
 
 
 private void updateFallingTexts(Stage primaryStage) {
@@ -328,52 +329,53 @@ private void updateFallingTexts(Stage primaryStage) {
 
 
 
-    private void handleTyping(KeyEvent event) {
-        String typed = event.getCharacter().trim();  // Get the typed character and trim any extra spaces
+   private void handleTyping(KeyEvent event) {
+    System.out.println("Key typed: " + event.getCharacter()); // Debug log
 
-        if (!typed.isEmpty()) {
-            totalTypedLetters++;  // Increment total typed letters
-            if (focusedText != null && focusedText.getText().startsWith(typed)) {
-                correctLetters++;  // Increment correct letters if the typed character matches
-            }
+    String typed = event.getCharacter().trim();
+    if (!typed.isEmpty()) {
+        totalTypedLetters++;
+        if (focusedText != null && focusedText.getText().startsWith(typed)) {
+            correctLetters++;
+        }
 
-            if (focusedText != null) {
-                String currentWord = focusedText.getText();
-                if (currentWord.startsWith(typed)) {
-                    focusedText.setText(currentWord.substring(1));  // Remove the first character
-                    if (focusedText.getText().isEmpty()) {
-                        fallingTexts.remove(focusedText);  // Remove the word from the list
-                        root.getChildren().remove(focusedText);  // Remove the word from the UI
-                        focusedText = null;  // Clear the focus
-                        score += 1;  // Increase the score
-                        fallingSpeed += 0.05;  // Increase falling speed slightly
-                        updateScoreLabel();  // Update the score label
-                        isWordFocused = false;  // Unlock the focus after completing the word
-                    }
+        if (focusedText != null) {
+            String currentWord = focusedText.getText();
+            if (currentWord.startsWith(typed)) {
+                focusedText.setText(currentWord.substring(1));
+                if (focusedText.getText().isEmpty()) {
+                    fallingTexts.remove(focusedText);
+                    root.getChildren().remove(focusedText);
+                    focusedText = null;
+                    score++;
+                    fallingSpeed += 0.05;
+                    updateScoreLabel();
+                    isWordFocused = false;
                 }
-            } else {
-                for (Label text : fallingTexts) {
-                    if (text.getText().startsWith(typed) && !isWordFocused) {
-                        focusedText = text;
-                        text.setText(text.getText().substring(1));  // Remove the first character immediately
-                        focusedText.setTextFill(Color.BLUE);  // Indicate focus
-                        isWordFocused = true;
+            }
+        } else {
+            for (Label text : fallingTexts) {
+                if (text.getText().startsWith(typed) && !isWordFocused) {
+                    focusedText = text;
+                    text.setText(text.getText().substring(1));
+                    focusedText.setTextFill(Color.BLUE);
+                    isWordFocused = true;
 
-                        if (focusedText.getText().isEmpty()) {
-                            fallingTexts.remove(focusedText);
-                            root.getChildren().remove(focusedText);
-                            focusedText = null;
-                            score += 1;
-                            fallingSpeed += 0.05;
-                            updateScoreLabel();
-                            isWordFocused = false;
-                        }
-                        break;
+                    if (focusedText.getText().isEmpty()) {
+                        fallingTexts.remove(focusedText);
+                        root.getChildren().remove(focusedText);
+                        focusedText = null;
+                        score++;
+                        fallingSpeed += 0.05;
+                        updateScoreLabel();
+                        isWordFocused = false;
                     }
+                    break;
                 }
             }
         }
     }
+}
 
 
  private void updateScoreLabel() {
@@ -493,67 +495,61 @@ private void updateFallingTexts(Stage primaryStage) {
     }
 
 
-    private void showGameOverScreen(Stage primaryStage) {
-        root = new Pane();
-        Scene scene = new Scene(root, 600, 400);
-        root.setStyle("-fx-background-color: black;");
+        private void showGameOverScreen(Stage primaryStage) {
+    // Gunakan StackPane sebagai root
+    StackPane root = new StackPane();
+    Scene scene = new Scene(root, 800, 600); // Ukuran layar besar
+    root.setStyle("-fx-background-color: black;");
 
-        Label gameOverLabel = new Label("Game Over!");
-        gameOverLabel.setFont(new Font(30));
-        gameOverLabel.setTextFill(Color.WHITE);
-        gameOverLabel.setLayoutX(200);
-        gameOverLabel.setLayoutY(50);
+    // Judul Game Over
+    Label gameOverLabel = new Label("Game Over!");
+    gameOverLabel.setFont(new Font(40)); // Ukuran font besar
+    gameOverLabel.setTextFill(Color.WHITE);
 
-        Label finalScoreLabel = new Label("Score: " + score);
-        finalScoreLabel.setFont(new Font(20));
-        finalScoreLabel.setTextFill(Color.WHITE);
-        finalScoreLabel.setLayoutX(200);
-        finalScoreLabel.setLayoutY(120);
+    // Label Score Akhir
+    Label finalScoreLabel = new Label("Score: " + score);
+    finalScoreLabel.setFont(new Font(20));
+    finalScoreLabel.setTextFill(Color.WHITE);
 
-        highestScore = Math.max(highestScore, score);
-        Label highestScoreLabel = new Label("Highest Score: " + highestScore);
-        highestScoreLabel.setFont(new Font(20));
-        highestScoreLabel.setTextFill(Color.WHITE);
-        highestScoreLabel.setLayoutX(200);
-        highestScoreLabel.setLayoutY(170);
+    // Label High Score
+    highestScore = Math.max(highestScore, score);
+    Label highestScoreLabel = new Label("Highest Score: " + highestScore);
+    highestScoreLabel.setFont(new Font(20));
+    highestScoreLabel.setTextFill(Color.WHITE);
 
-        double accuracy = (totalTypedLetters == 0) ? 0 : (correctLetters / (double) totalTypedLetters) * 100;
-        Label accuracyLabel = new Label(String.format("Accuracy: %.2f%%", accuracy));
-        accuracyLabel.setFont(new Font(20));
-        accuracyLabel.setTextFill(Color.WHITE);
-        accuracyLabel.setLayoutX(200);
-        accuracyLabel.setLayoutY(220);
+    // Label Akurasi
+    double accuracy = (totalTypedLetters == 0) ? 0 : (correctLetters / (double) totalTypedLetters) * 100;
+    Label accuracyLabel = new Label(String.format("Accuracy: %.2f%%", accuracy));
+    accuracyLabel.setFont(new Font(20));
+    accuracyLabel.setTextFill(Color.WHITE);
 
-        Button restartButton = new Button("Restart Game");
-        restartButton.setLayoutX(200);
-        restartButton.setLayoutY(300);
-        restartButton.setOnAction(e -> {
-            stopAllTimelines();
-            startGame(primaryStage, isMultiplayer);
-        });
-        styleButton(restartButton);
+    // Tombol Restart Game
+    Button restartButton = new Button("Restart Game");
+    restartButton.setOnAction(e -> {
+        stopAllTimelines();
+        startGame(primaryStage, isMultiplayer);
+    });
+    styleButton(restartButton);
 
-        Button mainMenuButton = new Button("Main Menu");
-        mainMenuButton.setLayoutX(350);
-        mainMenuButton.setLayoutY(300);
-        mainMenuButton.setOnAction(e -> {
-            stopAllTimelines();
-            showMainMenu(primaryStage);
-        });
-        styleButton(mainMenuButton);
+    // Tombol Main Menu
+    Button mainMenuButton = new Button("Main Menu");
+    mainMenuButton.setOnAction(e -> {
+        stopAllTimelines();
+        showMainMenu(primaryStage);
+    });
+    styleButton(mainMenuButton);
 
-        // Tambahkan event handler untuk Escape key
-        scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                stopAllTimelines();
-                showMainMenu(primaryStage);
-            }
-        });
+    // Gunakan VBox untuk menyusun elemen secara vertikal
+    VBox layout = new VBox(20); // Spasi antar elemen 20px
+    layout.setAlignment(Pos.CENTER); // Pusatkan elemen
+    layout.getChildren().addAll(gameOverLabel, finalScoreLabel, highestScoreLabel, accuracyLabel, restartButton, mainMenuButton);
 
-        root.getChildren().addAll(gameOverLabel, finalScoreLabel, highestScoreLabel, accuracyLabel, restartButton, mainMenuButton);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+    root.getChildren().add(layout); // Tambahkan VBox ke root
+    primaryStage.setScene(scene);
+    primaryStage.show();
+}
+
+
 
 
    public static void main(String[] args) {
