@@ -12,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -51,7 +50,6 @@ public class BrandNewTypingGame extends Application {
     public void start(Stage primaryStage) {
         showMainMenu(primaryStage);
 
-        // Ensure the app closes cleanly
         primaryStage.setOnCloseRequest(e -> {
             stopAllTimelines(); // Stop all timelines
             Platform.exit();    // Exit JavaFX application
@@ -70,7 +68,6 @@ public class BrandNewTypingGame extends Application {
         "-fx-cursor: hand;"                 // Kursor tangan
     );
 
-    // Hover effect
     button.setOnMouseEntered(e -> button.setStyle(
         "-fx-background-color: #45a049;" +  // Warna hijau lebih gelap
         "-fx-text-fill: white;" +
@@ -92,8 +89,6 @@ public class BrandNewTypingGame extends Application {
     ));
 }
 
-
-
     private void showMainMenu(Stage primaryStage) {
     stopAllTimelines();
 
@@ -104,18 +99,15 @@ public class BrandNewTypingGame extends Application {
     VBox menuBox = new VBox(30); // Tambahkan jarak antar elemen
     menuBox.setAlignment(Pos.CENTER); // Pusatkan elemen secara vertikal dan horizontal
 
-    // Judul Game
     Label title = new Label("Typing Rain");
     title.setTextFill(Color.WHITE);
     title.setFont(new Font(50)); // Perbesar font untuk layar besar
-
-    // Tombol Single Player
+        
     Button singlePlayerButton = new Button("Single Player");
     singlePlayerButton.setOnAction(e -> startGame(primaryStage, false));
     styleButton(singlePlayerButton);
     singlePlayerButton.setPrefWidth(200); // Lebar tombol lebih besar
 
-    // Tombol Multiplayer
     Button multiplayerButton = new Button("Multiplayer");
     multiplayerButton.setOnAction(e -> startGame(primaryStage, true));
     styleButton(multiplayerButton);
@@ -143,7 +135,6 @@ public class BrandNewTypingGame extends Application {
     Scene scene = new Scene(root, 800, 600); // Melebarkan layar
     root.setStyle("-fx-background-color: linear-gradient(to bottom, #000000, #1a1a1a);");
 
-    // Bottom Info Panel
     HBox bottomPanel = new HBox(20);
     bottomPanel.setAlignment(Pos.CENTER);
     bottomPanel.layoutYProperty().bind(scene.heightProperty().subtract(50)); // Selalu di bawah layar
@@ -165,7 +156,6 @@ public class BrandNewTypingGame extends Application {
     bottomPanel.getChildren().addAll(playerModeLabel, healthLabel, scoreLabel);
     root.getChildren().add(bottomPanel);
 
-    // Start game timelines
     spawnTimeline = new Timeline(new KeyFrame(Duration.seconds(0.8), e -> spawnText(primaryStage)));
     spawnTimeline.setCycleCount(Timeline.INDEFINITE);
     spawnTimeline.play();
@@ -183,8 +173,6 @@ public class BrandNewTypingGame extends Application {
     primaryStage.show();
 }
 
-
-    
     private void setupPauseMenu(Stage primaryStage) {
         pauseMenu = new Pane();
         pauseMenu.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8);");
@@ -223,8 +211,6 @@ public class BrandNewTypingGame extends Application {
         root.getChildren().add(pauseMenu);
     }
 
-    
-    
     private void handleKeyPress(KeyEvent event, Stage primaryStage) {
         if (event.getCode() == KeyCode.ESCAPE) {
             if (!isPaused) {
@@ -234,24 +220,21 @@ public class BrandNewTypingGame extends Application {
             }
         }
     }
-
-
+    
     private void spawnText(Stage primaryStage) {
     String[] words = {"java", "code", "typing", "game", "fun", "random", "fast", "react", "keyboard", "rain"};
     String randomWord = words[random.nextInt(words.length)];
     Label text = new Label(randomWord);
     text.setTextFill(Color.GREEN);
-    text.setFont(new Font(18)); // Sesuaikan font jika perlu
+    text.setFont(new Font(18)); 
 
     double sceneWidth = primaryStage.getScene().getWidth();
-    text.setLayoutX(random.nextInt((int) (sceneWidth - 50))); // Pastikan di dalam layar
+    text.setLayoutX(random.nextInt((int) (sceneWidth - 50))); 
     text.setLayoutY(0);
 
     fallingTexts.add(text);
     root.getChildren().add(text);
 }
-
-    
     
     private void pauseGame() {
         isPaused = true;
@@ -269,9 +252,8 @@ public class BrandNewTypingGame extends Application {
 
 
 private void restartGame(Stage primaryStage) {
-    stopAllTimelines(); // Hentikan semua Timeline
+    stopAllTimelines(); 
 
-    // Reset variabel
     score = 0;
     health = 5;
     fallingSpeed = 0.5;
@@ -283,12 +265,9 @@ private void restartGame(Stage primaryStage) {
     focusedText = null;
     isWordFocused = false;
 
-    // Restart game
     startGame(primaryStage, isMultiplayer);
 
 }
-
-
 
 private void updateFallingTexts(Stage primaryStage) {
     List<Label> toRemove = new ArrayList<>();
@@ -296,7 +275,7 @@ private void updateFallingTexts(Stage primaryStage) {
 
     for (Label text : fallingTexts) {
         text.setLayoutY(text.getLayoutY() + fallingSpeed);
-        if (text.getLayoutY() > sceneHeight) { // Sesuaikan dengan tinggi layar
+        if (text.getLayoutY() > sceneHeight) { 
             toRemove.add(text);
             health--;
             healthLabel.setText("Health: " + health);
@@ -312,22 +291,18 @@ private void updateFallingTexts(Stage primaryStage) {
         root.getChildren().remove(text);
     }
 }
-
-
     
     private void stopAllTimelines() {
         if (spawnTimeline != null) {
             spawnTimeline.stop();
-            spawnTimeline = null; // Dereference to avoid lingering
+            spawnTimeline = null; 
         }
         if (fallingTimeline != null) {
             fallingTimeline.stop();
-            fallingTimeline = null; // Dereference to avoid lingering
+            fallingTimeline = null; 
         }
         System.out.println("All timelines stopped.");
     }
-
-
 
    private void handleTyping(KeyEvent event) {
     System.out.println("Key typed: " + event.getCharacter()); // Debug log
@@ -412,28 +387,25 @@ private void updateFallingTexts(Stage primaryStage) {
 
     if (isMultiplayer) {
         if (currentPlayer == 1) {
-            // Store Player 1's score dan reset health untuk player 2
             player1Score = score;
             currentPlayer = 2;
-            health = 5;  // Reset health sebelum memulai giliran player 2
+            health = 5; 
             startGame(primaryStage, true);
         } else {
-            // Store Player 2's score dan tampilkan hasil
             player2Score = score;
             showMultiplayerResults(primaryStage);
         }
     } else {
-        // Single-player: Tampilkan layar game over
         showGameOverScreen(primaryStage);
     }
 }
     
     
     private void resetScene(Stage primaryStage) {
-        root.getChildren().clear(); // Clear all UI elements
-        root = new Pane(); // Reset the root container
+        root.getChildren().clear(); 
+        root = new Pane(); 
         Scene scene = new Scene(root, 600, 400);
-        primaryStage.setScene(scene); // Apply the new scene
+        primaryStage.setScene(scene); 
         System.out.println("Scene reset.");
     }
 
@@ -495,35 +467,29 @@ private void updateFallingTexts(Stage primaryStage) {
     }
 
 
-        private void showGameOverScreen(Stage primaryStage) {
-    // Gunakan StackPane sebagai root
+private void showGameOverScreen(Stage primaryStage) {
     StackPane root = new StackPane();
     Scene scene = new Scene(root, 800, 600); // Ukuran layar besar
     root.setStyle("-fx-background-color: black;");
 
-    // Judul Game Over
     Label gameOverLabel = new Label("Game Over!");
     gameOverLabel.setFont(new Font(40)); // Ukuran font besar
     gameOverLabel.setTextFill(Color.WHITE);
 
-    // Label Score Akhir
     Label finalScoreLabel = new Label("Score: " + score);
     finalScoreLabel.setFont(new Font(20));
     finalScoreLabel.setTextFill(Color.WHITE);
 
-    // Label High Score
     highestScore = Math.max(highestScore, score);
     Label highestScoreLabel = new Label("Highest Score: " + highestScore);
     highestScoreLabel.setFont(new Font(20));
     highestScoreLabel.setTextFill(Color.WHITE);
 
-    // Label Akurasi
     double accuracy = (totalTypedLetters == 0) ? 0 : (correctLetters / (double) totalTypedLetters) * 100;
     Label accuracyLabel = new Label(String.format("Accuracy: %.2f%%", accuracy));
     accuracyLabel.setFont(new Font(20));
     accuracyLabel.setTextFill(Color.WHITE);
 
-    // Tombol Restart Game
     Button restartButton = new Button("Restart Game");
     restartButton.setOnAction(e -> {
         stopAllTimelines();
@@ -531,7 +497,6 @@ private void updateFallingTexts(Stage primaryStage) {
     });
     styleButton(restartButton);
 
-    // Tombol Main Menu
     Button mainMenuButton = new Button("Main Menu");
     mainMenuButton.setOnAction(e -> {
         stopAllTimelines();
@@ -539,18 +504,14 @@ private void updateFallingTexts(Stage primaryStage) {
     });
     styleButton(mainMenuButton);
 
-    // Gunakan VBox untuk menyusun elemen secara vertikal
-    VBox layout = new VBox(20); // Spasi antar elemen 20px
-    layout.setAlignment(Pos.CENTER); // Pusatkan elemen
+    VBox layout = new VBox(20); 
+    layout.setAlignment(Pos.CENTER); 
     layout.getChildren().addAll(gameOverLabel, finalScoreLabel, highestScoreLabel, accuracyLabel, restartButton, mainMenuButton);
 
-    root.getChildren().add(layout); // Tambahkan VBox ke root
+    root.getChildren().add(layout); 
     primaryStage.setScene(scene);
     primaryStage.show();
 }
-
-
-
 
    public static void main(String[] args) {
         launch(args);
