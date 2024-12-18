@@ -1,0 +1,28 @@
+#start-button, #exit-button {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-min-width: 200px;
+    -fx-min-height: 50px;
+    -fx-text-fill: white;
+    -fx-background-color: #4CAF50;
+    -fx-background-radius: 10;
+    -fx-padding: 10 ;
+    -fx-cursor: hand;
+    -fx-border-color: #388E3C;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+}
+
+#start-button:hover, #exit-button:hover {
+    -fx-background-color: #388E3C;
+}
+
+#start-button:pressed, #exit-button:pressed {
+    -fx-background-color: #2E7D32;
+}
+
+#menu-box {
+    -fx-background-color: #212121;
+    -fx-alignment: center;
+    -fx-padding: 20;
+}
