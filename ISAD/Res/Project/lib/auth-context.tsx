@@ -5,10 +5,7 @@ import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 
 type User = {
-  id: string
-  email: string
-  role: "teacher" | "student"
-  name: string
+  
 } | null
 
 type AuthContextType = {
