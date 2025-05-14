@@ -1,106 +1,66 @@
 import Link from "next/link"
-import { format, differenceInDays } from "date-fns"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { SharedHeader } from "@/components/shared-header"
 
-interface AssignmentCardProps {
-  assignment: {
-    id: string
-    title: string
-    className: string
-    dueDate: Date
-    status?: "submitted" | "late" | "not-submitted"
-    submittedAt?: Date
-  }
-  role: "teacher" | "student"
-}
-
-export function AssignmentCard({ assignment, role }: AssignmentCardProps) {
-  const daysUntilDue = differenceInDays(assignment.dueDate, new Date())
-
-  const getStatusColor = () => {
-    if (daysUntilDue < 0) return "text-gray-500" // Overdue
-    if (daysUntilDue === 0) return "text-red-500" // Due today
-    if (daysUntilDue <= 3) return "text-yellow-500" // Due soon
-    return "text-green-500" // Due later
-  }
-
-  const getStatusText = () => {
-    if (daysUntilDue < 0) return "Overdue"
-    if (daysUntilDue === 0) return "Due today"
-    if (daysUntilDue === 1) return "Due tomorrow"
-    return `Due in ${daysUntilDue} days`
-  }
-
-  const getSubmissionStatusBadge = () => {
-    if (!assignment.status) return null
-
-    switch (assignment.status) {
-      case "submitted":
-        return <Badge className="bg-green-500">Submitted</Badge>
-      case "late":
-        return <Badge className="bg-red-500">Late</Badge>
-      case "not-submitted":
-        return <Badge variant="outline">Not Submitted</Badge>
-      default:
-        return null
-    }
-  }
-
-  const getSubmissionTimeText = () => {
-    if (!assignment.submittedAt) return null
-
-    const diffInHours = Math.round((assignment.submittedAt.getTime() - assignment.dueDate.getTime()) / (1000 * 60 * 60))
-
-    if (diffInHours < 0) {
-      const hours = Math.abs(diffInHours)
-      if (hours < 24) {
-        return <span className="text-green-500">Submitted {hours} hours early</span>
-      } else {
-        const days = Math.floor(hours / 24)
-        return <span className="text-green-500">Submitted {days} days early</span>
-      }
-    } else {
-      if (diffInHours < 24) {
-        return <span className="text-red-500">Submitted {diffInHours} hours late</span>
-      } else {
-        const days = Math.floor(diffInHours / 24)
-        return <span className="text-red-500">Submitted {days} days late</span>
-      }
-    }
-  }
-
+export default function Home() {
   return (
-    <Card>
-      <CardContent className="p-4">
-        <div className="space-y-2">
-          <div className="flex items-start justify-between">
-            <div>
-              <h3 className="font-medium">{assignment.title}</h3>
-              <p className="text-sm text-muted-foreground">{assignment.className}</p>
+    <div className="flex min-h-screen flex-col">
+      <SharedHeader />
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+                  SIAP: Academic Collaboration Made Simple
+                </h1>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  A platform for teachers and students to manage classes, assignments, and academic communication.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <Link href="/register?role=teacher">
+                  <Button size="lg">Register as Teacher</Button>
+                </Link>
+                <Link href="/register?role=student">
+                  <Button size="lg" variant="outline">
+                    Register as Student
+                  </Button>
+                </Link>
+              </div>
             </div>
-            {role === "student" && getSubmissionStatusBadge()}
           </div>
-          <div className="flex items-center justify-between">
-            <div className="text-sm">
-              <span>Due: {format(assignment.dueDate, "MMM d, yyyy 'at' h:mm a")}</span>
+        </section>
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">Class Management</h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Create and join classes with secure access codes and links.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">Assignment Tracking</h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Create, submit, and track assignments with visual due date indicators.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">Academic Updates</h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Share and receive important class announcements and information.
+                </p>
+              </div>
             </div>
-            <div className={`text-sm font-medium ${getStatusColor()}`}>{getStatusText()}</div>
           </div>
-          {role === "student" && assignment.submittedAt && <div className="text-sm">{getSubmissionTimeText()}</div>}
+        </section>
+      </main>
+      <footer className="border-t py-6 md:py-0">
+        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+          <p className="text-sm text-gray-500 dark:text-gray-400">© 2025 SIAP. All rights reserved.</p>
         </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <Link
-          href={`/${role}/${role === "teacher" ? "assignments" : "assignments"}/${assignment.id}`}
-          className="w-full"
-        >
-          <Button variant="outline" className="w-full">
-            {role === "teacher" ? "View Submissions" : "View Assignment"}
-          </Button>
-        </Link>
-      </CardFooter>
-    </Card>
+      </footer>
+    </div>
   )
 }
